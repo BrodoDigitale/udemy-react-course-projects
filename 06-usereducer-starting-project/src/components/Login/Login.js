@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useReducer } from "react";
+import React, { useState, useEffect, useReducer, useContext } from "react";
 
 import Card from "../UI/Card/Card";
 import classes from "./Login.module.css";
 import Button from "../UI/Button/Button";
+import { AuthContext } from "../../context/auth-context";
 
 //reducers are stated outside component because they do not need component data
 const emailReducer = (lastState, action) => {
@@ -30,6 +31,7 @@ const passwordReducer = (lastState, action) => {
 
 const Login = (props) => {
   const [formIsValid, setFormIsValid] = useState(false);
+  const authCtx = useContext(AuthContext);
   const [emailState, dispatchEmail] = useReducer(emailReducer, {
     value: "",
     isValid: false,
@@ -39,13 +41,6 @@ const Login = (props) => {
     isValid: false,
   });
 
-  useEffect(() => {
-    console.log("EFFECT RUNNING");
-
-    return () => {
-      console.log("EFFECT CLEANUP");
-    };
-  }, []);
 
   //debouncing for the form validity check
   //effect will run only after state VALIDITY changes
@@ -86,7 +81,7 @@ const Login = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onLogin(emailState.value, passwordState.value);
+    authCtx.onLogin(emailState.value, passwordState.value);
   };
 
   return (
