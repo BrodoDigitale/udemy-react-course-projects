@@ -6,10 +6,18 @@ import { Cart } from "./components/Cart/Cart";
 function App() {
   const [cartIsOpen, setCartIsOpen] = useState(false);
 
+  const openCart = () => {
+    setCartIsOpen(true);
+  };
+
+  const closeCart = () => {
+    setCartIsOpen(false);
+  };
+
   return (
     <>
-      {cartIsOpen && <Cart />}
-      <Header />
+      {cartIsOpen && <Cart closeCart={closeCart} />}
+      <Header openCart={openCart} />
       <main>
         <Meals />
       </main>
