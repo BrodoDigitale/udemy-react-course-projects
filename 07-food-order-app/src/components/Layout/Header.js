@@ -7,7 +7,7 @@ import { CartContext } from "../../store/cart-context";
 export const Header = ({ openCart }) => {
   const ctx = useContext(CartContext);
 
-  const totalItems = ctx.items.reduce((i, acc) => (acc += i.amount), 0);
+  const totalItems = ctx.items.reduce((acc, i) => (acc += i.amount), 0);
   return (
     <>
       <header className={classes.header}>

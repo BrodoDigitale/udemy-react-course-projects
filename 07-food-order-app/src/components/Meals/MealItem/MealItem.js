@@ -25,7 +25,7 @@ export const MealItem = ({ name, description, price, id }) => {
         <div className={classes.price}>{formattedPrice}</div>
       </div>
       <div>
-        <MealItemForm id={id} onAddToCart={onAddToCartHandler} />
+        <MealItemForm id={id} onAddtoCart={onAddToCartHandler} />
       </div>
     </li>
   );
