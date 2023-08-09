@@ -1,7 +1,7 @@
 import classes from "./MealItem.module.css";
 import { MealItemForm } from "./MealItemForm";
 
-export const MealItem = ({ name, description, price }) => {
+export const MealItem = ({ name, description, price, id }) => {
   //toFixed(2) makes sure we have 2 decimal places
   const formattedPrice = `$${price.toFixed(2)}`;
   return (
@@ -12,7 +12,7 @@ export const MealItem = ({ name, description, price }) => {
         <div className={classes.price}>{formattedPrice}</div>
       </div>
       <div>
-        <MealItemForm />
+        <MealItemForm id={id} />
       </div>
     </li>
   );
