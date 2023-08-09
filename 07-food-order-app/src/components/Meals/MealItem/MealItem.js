@@ -1,4 +1,5 @@
 import classes from "./MealItem.module.css";
+import { MealItemForm } from "./MealItemForm";
 
 export const MealItem = ({ name, description, price }) => {
   //toFixed(2) makes sure we have 2 decimal places
@@ -10,7 +11,9 @@ export const MealItem = ({ name, description, price }) => {
         <div className={classes.description}>{description}</div>
         <div className={classes.price}>{formattedPrice}</div>
       </div>
-      <div></div>
+      <div>
+        <MealItemForm />
+      </div>
     </li>
   );
 };
