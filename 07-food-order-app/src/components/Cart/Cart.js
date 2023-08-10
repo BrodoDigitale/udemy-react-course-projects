@@ -10,9 +10,13 @@ export const Cart = ({ closeCart }) => {
   const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
   const hasItems = cartCtx.items.length > 0;
 
-  const cartItemRemoveHandler = (id) => {};
+  const cartItemRemoveHandler = (id) => {
+    cartCtx.removeItem(id);
+  };
 
-  const cartItemAddHandler = (item) => {};
+  const cartItemAddHandler = (item) => {
+    cartCtx.addItem({ ...item, amount: 1 });
+  };
 
   const cartItems = (
     <ul className={classes["cart-items"]}>
@@ -22,8 +26,9 @@ export const Cart = ({ closeCart }) => {
           name={item.name}
           price={item.price}
           amount={item.amount}
-          onRemove={cartItemRemoveHandler(item.id)}
-          onAdd={cartItemAddHandler(item)}
+          //using bind we pass the parameter without calling function
+          onRemove={cartItemRemoveHandler.bind(null, item.id)}
+          onAdd={cartItemAddHandler.bind(null, item)}
         />
       ))}
     </ul>

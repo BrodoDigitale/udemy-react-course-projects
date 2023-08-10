@@ -26,6 +26,20 @@ const cartReducer = (state, action) => {
       state.totalAmount + action.item.price * action.item.amount;
     return { items: updatedItems, totalAmount: updatedTotalAmount };
   }
+  if (action.type === "REMOVE") {
+    const idx = state.items.findIndex((i) => i.id === action.id);
+    const item = state.items[idx];
+    let updatedItems;
+    if (item.amount > 1) {
+      const updatedItem = { ...item, amount: item.amount - 1 };
+      updatedItems = [...state.items];
+      updatedItems[idx] = updatedItem;
+    } else {
+      updatedItems = state.items.filter((i) => i.id !== action.id);
+    }
+    const updatedTotalAmount = state.totalAmount - item.price;
+    return { ...state, items: updatedItems, totalAmount: updatedTotalAmount };
+  }
 };
 
 export const CartProvider = (props) => {
