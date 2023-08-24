@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import MoviesList from "./components/MoviesList";
+import AddMovie from "./components/AddMovie";
 import "./App.css";
 
 function App() {
@@ -48,8 +49,31 @@ function App() {
     content = <p>Is loading...</p>;
   }
 
+  async function addMovieHandler(movie) {
+    const res = await fetch('someDummyUrl', {
+      method: 'POST',
+      body: JSON.stringify(movie),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    const data = await res.json();
+    const loadedMovies = [];
+
+    for(const key in data) {
+      loadedMovies.push({
+        id: key,
+        title: data[key].title
+      })
+    }
+    return loadedMovies;
+  }
+
   return (
     <React.Fragment>
+      <section>
+        <AddMovie onAddMovie={addMovieHandler} />
+      </section>
       <section>
         <button onClick={fetchMoviesHandler}>Fetch Movies</button>
       </section>
