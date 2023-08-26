@@ -12,12 +12,12 @@ const NewTask = (props) => {
     setError(null);
     try {
       const response = await fetch(
-        'https://react-http-6b4a6.firebaseio.com/tasks.json',
+        "https://64ea398abf99bdcc8e676b68.mockapi.io/tasks",
         {
-          method: 'POST',
+          method: "POST",
           body: JSON.stringify({ text: taskText }),
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
@@ -28,8 +28,7 @@ const NewTask = (props) => {
 
       const data = await response.json();
 
-      const generatedId = data.name; // firebase-specific => "name" contains generated id
-      const createdTask = { id: generatedId, text: taskText };
+      const createdTask = { id: data.id, text: taskText };
 
       props.onAddTask(createdTask);
     } catch (err) {
