@@ -1,11 +1,11 @@
 import { useState, useCallback } from "react";
 
-export const useHttp = (applyDataFn) => {
+export const useHttp = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const sendRequest = useCallback(
-    async (requestConfig) => {
+    async (requestConfig, applyDataFn) => {
       setIsLoading(true);
       setError(null);
       try {
@@ -26,7 +26,7 @@ export const useHttp = (applyDataFn) => {
       }
       setIsLoading(false);
     },
-    [applyDataFn]
+    []
   );
 
   return {
