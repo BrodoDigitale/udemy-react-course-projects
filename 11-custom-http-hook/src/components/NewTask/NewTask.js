@@ -1,40 +1,29 @@
-import { useState } from 'react';
+import { useHttp } from "../../hooks/use-http";
 
-import Section from '../UI/Section';
-import TaskForm from './TaskForm';
+import Section from "../UI/Section";
+import TaskForm from "./TaskForm";
 
 const NewTask = (props) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const { isLoading, error, sendRequest } = useHttp();
 
   const enterTaskHandler = async (taskText) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const response = await fetch(
-        "https://64ea398abf99bdcc8e676b68.mockapi.io/tasks",
-        {
-          method: "POST",
-          body: JSON.stringify({ text: taskText }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error('Request failed!');
-      }
-
-      const data = await response.json();
-
-      const createdTask = { id: data.id, text: taskText };
+    const createTask = (taskData) => {
+      const createdTask = { id: taskData.id, text: taskText };
 
       props.onAddTask(createdTask);
-    } catch (err) {
-      setError(err.message || 'Something went wrong!');
-    }
-    setIsLoading(false);
+    };
+
+    sendRequest(
+      {
+        url: "https://64ea398abf99bdcc8e676b68.mockapi.io/tasks",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: { text: taskText },
+      },
+      createTask
+    );
   };
 
   return (
