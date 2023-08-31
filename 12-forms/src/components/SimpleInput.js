@@ -1,8 +1,8 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 
 const SimpleInput = (props) => {
   const [enteredName, setEnteredName] = useState("");
-  const nameInputRef = useRef(null);
+  const [enteredNameIsInvalid, setEnteredNameIsInvalid] = useState(false);
 
   const inputHandler = (evt) => {
     setEnteredName(evt.target.value);
@@ -11,16 +11,23 @@ const SimpleInput = (props) => {
 
   const submitHandler = (evt) => {
     evt.preventDefault();
-    let name = nameInputRef.current.value;
-    console.log(name);
+
+    if(enteredName.trim() === "") {
+      setEnteredNameIsInvalid(true);
+      console.log("Error!!")
+    }
+    console.log(enteredName);
     setEnteredName("");
   }
 
+  let inputClasses = enteredNameIsInvalid ? "form-control invalid" : "form-control";
+
   return (
     <form onSubmit={submitHandler}>
-      <div className='form-control'>
+      <div className={inputClasses}>
         <label htmlFor='name'>Your Name</label>
-        <input ref={nameInputRef} type='text' id='name' onChange={inputHandler} value={enteredName}/>
+        <input type='text' id='name' onChange={inputHandler} value={enteredName}/>
+        {enteredNameIsInvalid && <p className="error-text">Invalid input value</p>}
       </div>
       <div className="form-actions">
         <button>Submit</button>
