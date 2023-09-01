@@ -6,28 +6,43 @@ const SimpleInput = (props) => {
 
   const inputHandler = (evt) => {
     setEnteredName(evt.target.value);
-    
-  }
+  };
+
+  const inputValidator = (val) => {
+    if (val.trim() === "") {
+      setEnteredNameIsInvalid(true);
+      console.log("Error!!");
+    }
+  };
 
   const submitHandler = (evt) => {
     evt.preventDefault();
-
-    if(enteredName.trim() === "") {
-      setEnteredNameIsInvalid(true);
-      console.log("Error!!")
-    }
-    console.log(enteredName);
+    inputValidator(enteredName);
     setEnteredName("");
-  }
+  };
 
-  let inputClasses = enteredNameIsInvalid ? "form-control invalid" : "form-control";
+  const nameInputBlurHandler = (evt) => {
+    inputValidator(enteredName);
+  };
+
+  let inputClasses = enteredNameIsInvalid
+    ? "form-control invalid"
+    : "form-control";
 
   return (
     <form onSubmit={submitHandler}>
       <div className={inputClasses}>
-        <label htmlFor='name'>Your Name</label>
-        <input type='text' id='name' onChange={inputHandler} value={enteredName}/>
-        {enteredNameIsInvalid && <p className="error-text">Invalid input value</p>}
+        <label htmlFor="name">Your Name</label>
+        <input
+          type="text"
+          id="name"
+          onChange={inputHandler}
+          onBlur={nameInputBlurHandler}
+          value={enteredName}
+        />
+        {enteredNameIsInvalid && (
+          <p className="error-text">Invalid input value</p>
+        )}
       </div>
       <div className="form-actions">
         <button>Submit</button>
