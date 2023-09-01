@@ -2,30 +2,29 @@ import { useState } from "react";
 
 const SimpleInput = (props) => {
   const [enteredName, setEnteredName] = useState("");
-  const [enteredNameIsInvalid, setEnteredNameIsInvalid] = useState(false);
-
+  const [enteredNameIsTouched, setEnteredNameIsTouched] = useState(false);
+  
+  const enteredNameIsValid = enteredName.trim() !== "";
   const inputHandler = (evt) => {
     setEnteredName(evt.target.value);
   };
 
-  const inputValidator = (val) => {
-    if (val.trim() === "") {
-      setEnteredNameIsInvalid(true);
-      console.log("Error!!");
-    }
-  };
-
   const submitHandler = (evt) => {
     evt.preventDefault();
-    inputValidator(enteredName);
+    setEnteredNameIsTouched(true);
+    if(!enteredNameIsValid) {
+      return;
+    }
+    console.log(enteredName);
     setEnteredName("");
+    setEnteredNameIsTouched(false);
   };
 
   const nameInputBlurHandler = (evt) => {
-    inputValidator(enteredName);
+    setEnteredNameIsTouched(true);
   };
 
-  let inputClasses = enteredNameIsInvalid
+  let inputClasses = !enteredNameIsValid && enteredNameIsTouched
     ? "form-control invalid"
     : "form-control";
 
@@ -40,7 +39,7 @@ const SimpleInput = (props) => {
           onBlur={nameInputBlurHandler}
           value={enteredName}
         />
-        {enteredNameIsInvalid && (
+        {!enteredNameIsValid && enteredNameIsTouched && (
           <p className="error-text">Invalid input value</p>
         )}
       </div>
