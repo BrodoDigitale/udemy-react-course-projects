@@ -14,7 +14,7 @@ const BasicForm = (props) => {
     reset: resetNameInput,
   } = useInput(nameValidator);
   const {
-    value: entereLastdName,
+    value: enteredLastName,
     isValid: enteredLastNameIsValid,
     hasError: lastNameInputHasError,
     inputOnChangeHandler: lastNameOnChangeHandler,
@@ -40,7 +40,7 @@ const BasicForm = (props) => {
     if (!formIsValid) {
       return;
     }
-    console.log(enteredName, entereLastdName, enteredEmail);
+    console.log(enteredName, enteredLastName, enteredEmail);
     resetNameInput();
     resetLastNameInput();
     resetEmailInput();
@@ -65,7 +65,7 @@ const BasicForm = (props) => {
           inputName={"Last Name"}
           onChangeHandler={lastNameOnChangeHandler}
           onBlurHandler={lastNameOnBlurHandler}
-          inputValue={entereLastdName}
+          inputValue={enteredLastName}
         />
       </div>
       <div className="form-control">

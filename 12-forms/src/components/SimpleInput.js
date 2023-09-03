@@ -2,7 +2,6 @@ const SimpleInput = ({
   id,
   inputHasError,
   errorText,
-  label,
   inputName,
   onChangeHandler,
   onBlurHandler,
