@@ -5,6 +5,8 @@ const SimpleInput = (props) => {
   const [enteredNameIsTouched, setEnteredNameIsTouched] = useState(false);
   
   const enteredNameIsValid = enteredName.trim() !== "";
+  let formIsValid = enteredNameIsValid ? true : false;
+
   const inputHandler = (evt) => {
     setEnteredName(evt.target.value);
   };
@@ -44,7 +46,7 @@ const SimpleInput = (props) => {
         )}
       </div>
       <div className="form-actions">
-        <button>Submit</button>
+        <button disabled={!formIsValid}>Submit</button>
       </div>
     </form>
   );
