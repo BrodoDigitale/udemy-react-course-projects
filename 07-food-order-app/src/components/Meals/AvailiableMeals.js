@@ -1,37 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import classes from "./AvailiableMeals.module.css";
 import { Card } from "../UI/Card";
 import { MealItem } from "./MealItem/MealItem";
+import { useFetchMeals } from "./ApiProvider";
 
-const DUMMY_MEALS = [
-  {
-    id: "m1",
-    name: "Sushi",
-    description: "Finest fish and veggies",
-    price: 22.99,
-  },
-  {
-    id: "m2",
-    name: "Schnitzel",
-    description: "A german specialty!",
-    price: 16.5,
-  },
-  {
-    id: "m3",
-    name: "Barbecue Burger",
-    description: "American, raw, meaty",
-    price: 12.99,
-  },
-  {
-    id: "m4",
-    name: "Green Bowl",
-    description: "Healthy...and green...",
-    price: 18.99,
-  },
-];
 
 export const AvailiableMeals = () => {
-  const mealsList = DUMMY_MEALS.map((meal) => (
+
+ const [meals, setMeals] = useState([]);
+ const { isLoading, error, sendRequest: fetchMeals } = useFetchMeals();
+
+  useEffect(() => {
+    const transformMeals = (data) => {
+      setMeals(data);
+    };
+
+    fetchMeals(
+      {
+        url: "https://64ea398abf99bdcc8e676b68.mockapi.io/meals",
+      },
+      transformMeals
+    );
+  }, [fetchMeals]);
+
+  const mealsList = meals.map((meal) => (
     <MealItem
       key={meal.id}
       id={meal.id}
@@ -43,6 +35,7 @@ export const AvailiableMeals = () => {
 
   return (
     <section className={classes.meals}>
+      {isLoading && <p>Loading meals ...</p>}
       <Card>
         <ul>{mealsList}</ul>
       </Card>
