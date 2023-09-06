@@ -38,6 +38,15 @@ export const AvailiableMeals = () => {
       </section>
     );
   }
+
+  console.log(error)
+    if (error) {
+      return (
+        <section className={classes.mealsErr}>
+          <p>{`Error! ${error}`}</p>
+        </section>
+      );
+    }
   return (
     <section className={classes.meals}>
       <Card><ul>{mealsList}</ul></Card>
