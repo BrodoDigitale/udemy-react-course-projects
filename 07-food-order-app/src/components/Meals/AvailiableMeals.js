@@ -4,11 +4,9 @@ import { Card } from "../UI/Card";
 import { MealItem } from "./MealItem/MealItem";
 import { useFetchMeals } from "./ApiProvider";
 
-
 export const AvailiableMeals = () => {
-
- const [meals, setMeals] = useState([]);
- const { isLoading, error, sendRequest: fetchMeals } = useFetchMeals();
+  const [meals, setMeals] = useState([]);
+  const { isLoading, error, sendRequest: fetchMeals } = useFetchMeals();
 
   useEffect(() => {
     const transformMeals = (data) => {
@@ -33,12 +31,16 @@ export const AvailiableMeals = () => {
     />
   ));
 
+  if(isLoading) {
+    return (
+      <section className={classes.mealsLoading}>
+        <p>Loading meals ...</p>
+      </section>
+    );
+  }
   return (
     <section className={classes.meals}>
-      {isLoading && <p>Loading meals ...</p>}
-      <Card>
-        <ul>{mealsList}</ul>
-      </Card>
+      <Card><ul>{mealsList}</ul></Card>
     </section>
   );
 };

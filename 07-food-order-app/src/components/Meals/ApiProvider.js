@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 
 export const useFetchMeals = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const sendRequest = useCallback(async (requestConfig, applyDataFn) => {
