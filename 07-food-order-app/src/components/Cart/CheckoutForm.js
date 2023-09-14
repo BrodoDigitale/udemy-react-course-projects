@@ -2,11 +2,11 @@ import classes from "./Checkout.module.css";
 
 const CheckoutForm = props => {
 
-const onSubmit = (evt) => {
+const onConfirm = (evt) => {
     evt.preventDefault();
 }
 return (
-  <form>
+  <form onSubmit={onConfirm} className={classes.form}>
     <div className={classes.control}>
       <label htmlFor="name">Your name</label>
       <input type="text" id="name" />
@@ -23,8 +23,12 @@ return (
       <label htmlFor="city">City</label>
       <input type="text" id="city" />
     </div>
-    <button onClick={onSubmit}>Confirm</button>
-    <button type="button" onClick={props.onCancel}>Cancel</button>
+    <div className={classes.actions}>
+      <button>Confirm</button>
+      <button type="button" onClick={props.onCancel}>
+        Cancel
+      </button>
+    </div>
   </form>
 );
 }
