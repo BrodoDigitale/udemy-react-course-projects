@@ -28,32 +28,60 @@ const onConfirm = (evt) => {
   const city = cityInput.current.value;
 
   //validation
+  setFormInputsValidity({
+    name: !isEmpty(name),
+    street: !isEmpty(street),
+    city: !isEmpty(city),
+    cap: isFiveChars(cap),
+  });
+  
   const formIsValid =
-    !isEmpty(name) && !isEmpty(street) && isFiveChars(cap) && !isEmpty(city);
+    !isEmpty(name) && !isEmpty(street) && !isEmpty(city) && isFiveChars(cap);
 
   if (!formIsValid) {
     //error 
+    console.log("ERROR");
   }
   //submit data
   console.log(name, street, city, cap);
 }
 return (
   <form onSubmit={onConfirm} className={classes.form}>
-    <div className={classes.control}>
+    <div
+      className={`${classes.control} ${
+        formInputsValidity.name ? "" : classes.invalid
+      }`}
+    >
       <label htmlFor="name">Your name</label>
       <input ref={nameInput} type="text" id="name" />
+      {!formInputsValidity.name && <p>Please enter valid name</p>}
     </div>
-    <div className={classes.control}>
+    <div
+      className={`${classes.control} ${
+        formInputsValidity.street ? "" : classes.invalid
+      }`}
+    >
       <label htmlFor="street">Street</label>
       <input ref={streetInput} type="text" id="street" />
+      {!formInputsValidity.street && <p>Please enter valid street</p>}
     </div>
-    <div className={classes.control}>
+    <div
+      className={`${classes.control} ${
+        formInputsValidity.cap ? "" : classes.invalid
+      }`}
+    >
       <label htmlFor="CAP">Postal code</label>
       <input ref={capInput} type="text" id="CAP" />
+      {!formInputsValidity.cap && <p>Cap must be 5 characters</p>}
     </div>
-    <div className={classes.control}>
+    <div
+      className={`${classes.control} ${
+        formInputsValidity.city ? "" : classes.invalid
+      }`}
+    >
       <label htmlFor="city">City</label>
       <input ref={cityInput} type="text" id="city" />
+      {!formInputsValidity.city && <p>Please enter valid city</p>}
     </div>
     <div className={classes.actions}>
       <button>Confirm</button>
