@@ -1,5 +1,9 @@
 import classes from "./Checkout.module.css";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+
+
+const isEmpty = (str) => str.trim() === "";
+const isFiveChars = (str) => str.trim().length === 5;
 
 const CheckoutForm = props => {
 
@@ -8,16 +12,30 @@ const streetInput = useRef();
 const capInput = useRef();
 const cityInput = useRef();
 
+const [formInputsValidity, setFormInputsValidity] = useState({
+  name: true,
+  street: true,
+  city: true,
+  cap: true
+});
+
 
 const onConfirm = (evt) => {
-    evt.preventDefault();
-    const name = nameInput.current.value;
-    const street = streetInput.current.value;
-    const cap = capInput.current.value;
-    const city = cityInput.current.value;
+  evt.preventDefault();
+  const name = nameInput.current.value;
+  const street = streetInput.current.value;
+  const cap = capInput.current.value;
+  const city = cityInput.current.value;
 
-    //validation
-    console.log(name, street, city, cap)
+  //validation
+  const formIsValid =
+    !isEmpty(name) && !isEmpty(street) && isFiveChars(cap) && !isEmpty(city);
+
+  if (!formIsValid) {
+    //error 
+  }
+  //submit data
+  console.log(name, street, city, cap);
 }
 return (
   <form onSubmit={onConfirm} className={classes.form}>
