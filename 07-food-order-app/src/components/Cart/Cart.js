@@ -8,7 +8,8 @@ import CheckoutForm from "./CheckoutForm";
 export const Cart = ({ closeCart }) => {
   const cartCtx = useContext(CartContext);
   const [checkoutInProgress, setCheckoutInProgress] = useState(false);
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [orderSubmitSuccess, setOrderSubmitSuccess] = useState(false);
   const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
   const hasItems = cartCtx.items.length > 0;
 
@@ -40,39 +41,59 @@ export const Cart = ({ closeCart }) => {
     </ul>
   );
 
-  const submitOrderHandler = (userData) => {
+  const submitOrderHandler = async (userData) => {
     console.log("user", userData, "order", cartCtx.items);
-    fetch("https://64ea398abf99bdcc8e676b68.mockapi.io/orders", {
+    setIsSubmitting(true);
+    await fetch("https://64ea398abf99bdcc8e676b68.mockapi.io/orders", {
       method: "POST",
       body: JSON.stringify({
         user: userData,
         order: cartCtx.items,
       }),
     });
-  }
+    //we could check for response and add error handling
+    setIsSubmitting(false);
+    setOrderSubmitSuccess(true);
+    cartCtx.clearCart();
+  };
 
   const modalActions = (
-   <div className={classes.actions}>
-          <button className={classes["button--alt"]} onClick={closeCart}>
-            Close
-          </button>
-          {hasItems && (
-            <button className={classes.button} onClick={orderHandler}>
-              Order
-            </button>
-          )}
-        </div>)
-  
+    <div className={classes.actions}>
+      <button className={classes["button--alt"]} onClick={closeCart}>
+        Close
+      </button>
+      {hasItems && (
+        <button className={classes.button} onClick={orderHandler}>
+          Order
+        </button>
+      )}
+    </div>
+  );
+
+  const CartModelContent = () => {
+    return (
+      <>
+        {cartItems}
+        <div className={classes.total}>
+          <span>Total Amount</span>
+          <span>{totalAmount}</span>
+        </div>
+        {checkoutInProgress && (
+          <CheckoutForm onCancel={closeCart} onSubmit={submitOrderHandler} />
+        )}
+        {!checkoutInProgress && modalActions}
+      </>
+    );
+  };
+
+  const isSubmittingOrderContent = <p>Submitting order...</p>;
+  const submitSuccessContent = <p>Your ordder has been sent!</p>;
 
   return (
     <Modal onClose={closeCart}>
-      {cartItems}
-      <div className={classes.total}>
-        <span>Total Amount</span>
-        <span>{totalAmount}</span>
-      </div>
-      {checkoutInProgress && <CheckoutForm onCancel={closeCart} onSubmit={submitOrderHandler}/>}
-      {!checkoutInProgress && modalActions}
+      {!isSubmitting && !orderSubmitSuccess && <CartModelContent />}
+      {isSubmitting && isSubmittingOrderContent}
+      {orderSubmitSuccess && submitSuccessContent}
     </Modal>
   );
 };
