@@ -40,6 +40,17 @@ export const Cart = ({ closeCart }) => {
     </ul>
   );
 
+  const submitOrderHandler = (userData) => {
+    console.log("user", userData, "order", cartCtx.items);
+    fetch("https://64ea398abf99bdcc8e676b68.mockapi.io/orders", {
+      method: "POST",
+      body: JSON.stringify({
+        user: userData,
+        order: cartCtx.items,
+      }),
+    });
+  }
+
   const modalActions = (
    <div className={classes.actions}>
           <button className={classes["button--alt"]} onClick={closeCart}>
@@ -60,7 +71,7 @@ export const Cart = ({ closeCart }) => {
         <span>Total Amount</span>
         <span>{totalAmount}</span>
       </div>
-      {checkoutInProgress && <CheckoutForm onCancel={closeCart}/>}
+      {checkoutInProgress && <CheckoutForm onCancel={closeCart} onSubmit={submitOrderHandler}/>}
       {!checkoutInProgress && modalActions}
     </Modal>
   );

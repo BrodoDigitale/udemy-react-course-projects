@@ -43,7 +43,12 @@ const onConfirm = (evt) => {
     console.log("ERROR");
   }
   //submit data
-  console.log(name, street, city, cap);
+  props.onSubmit({
+    name: name,
+    street: street,
+    city: city,
+    cap: cap
+  })
 }
 return (
   <form onSubmit={onConfirm} className={classes.form}>
