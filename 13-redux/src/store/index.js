@@ -1,10 +1,20 @@
 import { createStore } from "redux";
+import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
   counter: 0,
   showCounter: true,
 };
 
+createSlice({
+  name: "",
+  initialState: initialState,
+  reducers: {
+    incremet() {},
+    decrement() {},
+    toggle() {},
+  }
+});
 const reducer = (state = initialState, action) => {
   if (action.type === "INCREMENT") {
     return {
