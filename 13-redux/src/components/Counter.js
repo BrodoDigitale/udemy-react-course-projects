@@ -1,5 +1,6 @@
 import classes from './Counter.module.css';
 import { useSelector, useDispatch } from 'react-redux';
+import { actions } from '../store';
 
 const Counter = () => {
   //redux automativally subscribes component to the selectors
@@ -9,15 +10,15 @@ const Counter = () => {
   const dispatch = useDispatch();
 
   const incrementHandler = () => {
-    dispatch({type: "INCREMENT", value: 5});
+    dispatch(actions.incremet(5));
   }
 
   const decrementHandler = () => {
-    dispatch({ type: "DECREMENT" });
+    dispatch(actions.decrement());
   }
 
   const toggleHandler = () => {
-    dispatch({ type: "TOGGLE" });
+    dispatch(actions.toggle());
   }
 
   return (
