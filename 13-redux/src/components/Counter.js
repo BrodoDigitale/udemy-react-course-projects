@@ -5,7 +5,7 @@ import { counterActions } from '../store';
 const Counter = () => {
   //redux automativally subscribes component to the selectors
   const counter = useSelector((state) => state.counter.counter);
-  const show = useSelector((state) => state.counter.showCounter)
+  const show = useSelector((state) => state.counter.showCounter);
   // to use a dispatcher we need useDispatch hook
   const dispatch = useDispatch();
 
