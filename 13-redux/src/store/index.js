@@ -1,13 +1,13 @@
 import { createStore } from "redux";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, configureStore } from "@reduxjs/toolkit";
 
 const initialState = {
   counter: 0,
   showCounter: true,
 };
 
-createSlice({
-  name: "",
+export const counterSlice = createSlice({
+  name: "counter",
   initialState: initialState,
   reducers: {
     incremet(state, action) {
@@ -21,7 +21,7 @@ createSlice({
     },
   },
 });
-const reducer = (state = initialState, action) => {
+/*const reducer = (state = initialState, action) => {
   if (action.type === "INCREMENT") {
     return {
       ...state,
@@ -41,6 +41,9 @@ const reducer = (state = initialState, action) => {
     };
   }
   return state;
-};
+};*/
 
-export const store = createStore(reducer);
+export const store = configureStore({
+  //could be an object with many reducers
+  reducer: counterSlice.reducer,
+});
