@@ -7,6 +7,8 @@ import { useDispatch } from "react-redux";
 import { uiActions } from "./store/ui-slice";
 import Notification from "./components/UI/Notification";
 
+let isInitialRender = true;
+
 function App() {
   const showCart = useSelector((state) => state.ui.cartIsOpen);
   const cart = useSelector((state) => state.cart);
@@ -14,6 +16,7 @@ function App() {
   const notification = useSelector((state) => state.ui.notification);
 
   useEffect(() => {
+
     const sendCartData = async () => {
       dispatch(
         uiActions.setNotificiation({
@@ -48,6 +51,11 @@ function App() {
         })
       );
     };
+
+    if(isInitialRender) {
+      isInitialRender = false;
+      return;
+    }
 
     sendCartData().catch((error) => {
       dispatch(
