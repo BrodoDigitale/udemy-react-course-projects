@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { uiActions } from "./ui-slice";
 
 export const cartSlice = createSlice({
   name: "cart",
@@ -38,5 +39,24 @@ export const cartSlice = createSlice({
     },
   },
 });
+
+export const sendCartData = () => {
+  //async code
+
+  //..fetching data
+
+  //reducer we actually want to dispatch
+  return (dispatch) => {
+    dispatch(
+      uiActions.setNotificiation({
+        status: "success",
+        title: "Success",
+        msg: "Cart data sent",
+      })
+    );
+
+  }
+
+};
 
 export const cartActions = cartSlice.actions;
