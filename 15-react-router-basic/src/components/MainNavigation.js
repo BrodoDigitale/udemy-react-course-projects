@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 import classes from "./MainNavigation.module.css";
 
 
@@ -8,10 +8,20 @@ export const MainNavigation = () => {
         <nav>
           <ul className={classes.list}>
             <li>
-              <Link to="/">Home</Link>
+              <NavLink
+                to="/"
+                className={({ isActive }) => (isActive ? classes.active : "")}
+              >
+                Home
+              </NavLink>
             </li>
             <li>
-              <Link to="/products">Products</Link>
+              <NavLink
+                to="/products"
+                className={({ isActive }) => (isActive ? classes.active : "")}
+              >
+                Products
+              </NavLink>
             </li>
           </ul>
         </nav>
