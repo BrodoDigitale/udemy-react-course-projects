@@ -14,7 +14,7 @@ export const Products = () => {
         {DUMMY_PRODUCTS.map((product) => {
           return (
             <li key={product.id}>
-              <Link to={`${product.title}`}>{product.title}</Link>
+              <Link to={`/products/${product.title}`}>{product.title}</Link>
             </li>
           );
         })}
