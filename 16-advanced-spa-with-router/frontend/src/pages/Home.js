@@ -7,7 +7,7 @@ export const HomePage = () => {
     <>
       <h1>This is my homepage</h1>
       <p>
-        Go to <Link to="/products">Events</Link>
+        Go to <Link to="/events">Events</Link>
       </p>
     </>
   );
