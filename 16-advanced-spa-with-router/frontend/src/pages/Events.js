@@ -1,35 +1,37 @@
-import React from "react";
+import { useEffect, useState } from "react";
+
 import EventsList from "../components/EventsList";
 
-const DUMMY_EVENTS = [
-  {
-    id: "1",
-    title: "Event1",
-    date: "1st of November",
-    image:
-      "https://plus.unsplash.com/premium_photo-1696879454010-6aed21c32fc5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2669&q=80",
-  },
-  {
-    id: "2",
-    title: "Event2",
-    date: "3rd of November",
-    image:
-      "https://plus.unsplash.com/premium_photo-1696879454010-6aed21c32fc5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2669&q=80",
-  },
-  {
-    id: "3",
-    title: "Event3",
-    date: "5th of November",
-    image:
-      "https://plus.unsplash.com/premium_photo-1696879454010-6aed21c32fc5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2669&q=80",
-  },
-];
+function EventsPage() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [fetchedEvents, setFetchedEvents] = useState();
+  const [error, setError] = useState();
 
-export const Events = () => {
+  useEffect(() => {
+    async function fetchEvents() {
+      setIsLoading(true);
+      const response = await fetch("http://localhost:8080/events");
+
+      if (!response.ok) {
+        setError("Fetching events failed.");
+      } else {
+        const resData = await response.json();
+        setFetchedEvents(resData.events);
+      }
+      setIsLoading(false);
+    }
+
+    fetchEvents();
+  }, []);
   return (
     <>
-      <h1>Events</h1>
-      <EventsList events={DUMMY_EVENTS}/>
+      <div style={{ textAlign: "center" }}>
+        {isLoading && <p>Loading...</p>}
+        {error && <p>{error}</p>}
+      </div>
+      {!isLoading && fetchedEvents && <EventsList events={fetchedEvents} />}
     </>
   );
-};
+}
+
+export default EventsPage;
