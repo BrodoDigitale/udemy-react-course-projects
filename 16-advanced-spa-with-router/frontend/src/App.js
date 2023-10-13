@@ -7,31 +7,44 @@ import { EditEventPage } from "./pages/EditEventPage";
 import { RootLayout } from "./pages/RootLayout";
 import { EventPageLayout } from "./pages/EventPageLayout";
 
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <RootLayout />,
-      children: [
-        { path: "/", element: <HomePage /> },
-        { path: "/events", element: <Events /> },
-        {
-          path: "/events/:id",
-          element: <EventPageLayout />,
-          children: [
-            {
-              path: "/events/:id",
-              element: <EventDetail />,
-            },
-          ],
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <RootLayout />,
+    children: [
+      { path: "/", element: <HomePage /> },
+      {
+        path: "/events",
+        element: <Events />,
+        loader: async () => {
+          const response = await fetch("http://localhost:8080/events");
+
+          if (!response.ok) {
+            //todo
+          } else {
+            const resData = await response.json();
+            return resData.events;
+          }
         },
-        { path: "/events/:id/edit", element: <EditEventPage /> },
-        { path: "/events/new", element: <NewEventPage /> },
-      ],
-    },
-  ]);
+      },
+      {
+        path: "/events/:id",
+        element: <EventPageLayout />,
+        children: [
+          {
+            path: "/events/:id",
+            element: <EventDetail />,
+          },
+        ],
+      },
+      { path: "/events/:id/edit", element: <EditEventPage /> },
+      { path: "/events/new", element: <NewEventPage /> },
+    ],
+  },
+]);
 
 function App() {
-  return <RouterProvider router={router}/>;
+  return <RouterProvider router={router} />;
 }
 
 export default App;
