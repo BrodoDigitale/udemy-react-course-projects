@@ -19,10 +19,11 @@ function EventsPage() {
 export default EventsPage;
 
 export const eventsLoader = async () => {
-  const response = await fetch("http://localhost:8080/evens");
+  const response = await fetch("http://localhost:8080/events");
 
   if (!response.ok) {
-    return { error: true, message: "Failed to load data"}
+    // return { error: true, message: "Failed to load data"}
+    throw new Error("Failed to load data");
   } else {
     return response;
   }
