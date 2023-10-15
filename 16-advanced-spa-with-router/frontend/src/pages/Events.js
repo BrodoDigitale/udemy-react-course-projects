@@ -3,9 +3,15 @@ import { useLoaderData } from "react-router-dom";
 
 function EventsPage() {
   const data = useLoaderData();
+  const events = data.events;
+
+  if (data.error) {
+    return <p>{data.message}</p>
+  }
+
   return (
     <>
-      <EventsList events={data} />
+      <EventsList events={events} />
     </>
   );
 }
@@ -13,12 +19,11 @@ function EventsPage() {
 export default EventsPage;
 
 export const eventsLoader = async () => {
-  const response = await fetch("http://localhost:8080/events");
+  const response = await fetch("http://localhost:8080/evens");
 
   if (!response.ok) {
-    //todo
+    return { error: true, message: "Failed to load data"}
   } else {
-    const resData = await response.json();
-    return resData.events;
+    return response;
   }
 };
