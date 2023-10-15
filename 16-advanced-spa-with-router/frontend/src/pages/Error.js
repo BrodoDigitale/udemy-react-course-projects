@@ -5,7 +5,7 @@ import { MainNavigation } from "../components/MainNavigation";
 
 export const ErrorPage = () => {
   const error = useRouteError();
-  console.log(error)
+
   return (
     <>
       <MainNavigation />
