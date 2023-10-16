@@ -26,6 +26,11 @@ export const NewEventPage = () => {
     body: JSON.stringify(eventData),
    });
 
+   //validation error
+   if(response.status === 422) {
+    return response;
+   }
+
    if(!response.ok) {
     throw new Error('event not saved');
    }
