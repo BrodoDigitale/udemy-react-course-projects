@@ -1,5 +1,5 @@
 import NewsletterSignup from "../components/NewsletterSignup";
-import PageContent from "../components/PageContent";
+import PageContent from "../pages/PageContent";
 
 function NewsletterPage() {
   return (

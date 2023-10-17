@@ -71,7 +71,7 @@ export function EventForm({ method, event }) {
   );
 }
 
- export const newEventAction = async ({ request, params }) => {
+ export const action = async ({ request, params }) => {
    const data = await request.formData();
    const method = request.method;
 

@@ -2,7 +2,7 @@ import React from "react";
 import EventItem from "../components/EventItem";
 import { redirect, useRouteLoaderData } from "react-router-dom";
 
-export const EventDetail = () => {
+export const EventDetailPage = () => {
   const data = useRouteLoaderData('event-detail');
   const event = data.event;
   return (
@@ -10,7 +10,7 @@ export const EventDetail = () => {
   );
 };
 
-export const eventLoader = async({request, params}) => {
+export const eventDetailLoader = async({request, params}) => {
     const response = await fetch(`http://localhost:8080/events/${params.id}`);
 
   if (!response.ok) {
