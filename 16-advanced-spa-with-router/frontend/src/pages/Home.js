@@ -1,14 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import PageContent from "./PageContent";
 
 export const HomePage = () => {
 
   return (
-    <div style={{ textAlign: "center" }}>
-      <h1>This is my homepage</h1>
-      <p>
-        Go to <Link to="/events">Events</Link>
-      </p>
-    </div>
+      <PageContent title={"Welcome!"}>
+        <h1>Browse our fantastic events</h1>
+      </PageContent>
   );
 };
