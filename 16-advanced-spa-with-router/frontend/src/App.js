@@ -1,7 +1,8 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { EditEventPage } from "./pages/EditEventPage";
 import { ErrorPage } from "./pages/Error";
-import { EventDetailPage,
+import {
+  EventDetailPage,
   eventDetailLoader,
   deleteEventAction,
 } from "./pages/EventDetailPage";
@@ -12,7 +13,7 @@ import { NewEventPage } from "./pages/NewEventPage";
 import { EventPageLayout } from "./pages/EventPageLayout";
 import { action as manipulateEventAction } from "./components/EventForm";
 import NewsletterPage, { action as newsletterAction } from "./pages/Newsletter";
-import { AuthenticationPage } from "./pages/Authentication";
+import { AuthenticationPage, authAction } from "./pages/Authentication";
 
 const router = createBrowserRouter([
   {
@@ -21,7 +22,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <HomePage /> },
-      { path: "login", element: <AuthenticationPage />},
+      { path: "login", element: <AuthenticationPage />, action: authAction },
       {
         path: "events",
         element: <EventPageLayout />,
