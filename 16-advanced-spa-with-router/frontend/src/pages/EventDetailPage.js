@@ -11,7 +11,7 @@ export const EventDetailPage = () => {
 };
 
 export const eventDetailLoader = async({request, params}) => {
-    const response = await fetch(`http://localhost:8080/events/${params.id}`);
+    const response = await fetch(`http://localhost:8080/events/${params.eventId}`);
 
   if (!response.ok) {
     // return { error: true, message: "Failed to load data"}
@@ -23,7 +23,7 @@ export const eventDetailLoader = async({request, params}) => {
 }
 
 export const deleteEventAction = async({request, params}) => {
-  const response = await fetch(`http://localhost:8080/events/${params.id}`, {
+  const response = await fetch(`http://localhost:8080/events/${params.eventId}`, {
     method: request.method,
   });
     if (!response.ok) {
