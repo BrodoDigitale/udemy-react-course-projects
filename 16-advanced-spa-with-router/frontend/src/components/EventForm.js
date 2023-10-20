@@ -1,6 +1,7 @@
 import { Form, useActionData, useNavigate, useNavigation, redirect } from 'react-router-dom';
 
 import classes from './EventForm.module.css';
+import { getAuthToken } from '../util/auth';
 
 export function EventForm({ method, event }) {
   //retrieves data from the action if BE returned validation error
@@ -86,10 +87,12 @@ export function EventForm({ method, event }) {
    if(method === "PATCH") {
     url = `http://localhost:8080/events/${params.id}`;
    }
+   const token = getAuthToken();
    const response = await fetch(url, {
      method: method,
      headers: {
        "Content-type": "application/json",
+       "Authorization": "Bearer " + token,
      },
      body: JSON.stringify(eventData),
    });

@@ -40,6 +40,10 @@ export const authAction = async({request}) => {
     throw json({ message: 'Authentification error'}, {status: 500});
   }
 
+  const resData = await res.json();
+  const token = resData.token;
+
+  localStorage.setItem('token', token);
   //success
   return redirect("/");
 }

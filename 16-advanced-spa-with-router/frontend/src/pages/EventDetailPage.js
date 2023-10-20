@@ -1,6 +1,7 @@
 import React from "react";
 import EventItem from "../components/EventItem";
 import { redirect, useRouteLoaderData } from "react-router-dom";
+import { getAuthToken } from "../util/auth";
 
 export const EventDetailPage = () => {
   const data = useRouteLoaderData('event-detail');
@@ -23,8 +24,12 @@ export const eventDetailLoader = async({request, params}) => {
 }
 
 export const deleteEventAction = async({request, params}) => {
+  const token = getAuthToken();
   const response = await fetch(`http://localhost:8080/events/${params.eventId}`, {
     method: request.method,
+    headers: {
+      'Authorization': 'Bearer ' + token,
+    }
   });
     if (!response.ok) {
       throw new Error("Failed to delete event");
