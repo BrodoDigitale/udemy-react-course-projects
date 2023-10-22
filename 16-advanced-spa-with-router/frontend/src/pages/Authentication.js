@@ -44,6 +44,13 @@ export const authAction = async({request}) => {
   const token = resData.token;
 
   localStorage.setItem('token', token);
+  const expiration = new Date();
+
+  //setHours and getHours are browser built-in methods
+  expiration.setHours(expiration.getHours() + 1);
+  localStorage.setItem('expiration',expiration.toISOString() );
+
+
   //success
   return redirect("/");
 }
