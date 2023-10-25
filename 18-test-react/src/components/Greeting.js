@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { Wrapper } from "./Wrapper";
 
 
 export const Greeting = () => {
@@ -16,9 +16,11 @@ export const Greeting = () => {
 
   return (
     <div>
-      <h2>Hello world</h2>
-      <p>Good to see yo!</p>
-      <button onClick={handleTextChange}>{text}</button>
+      <Wrapper>
+        <h2>Hello world</h2>
+        <p>Good to see yo!</p>
+        <button onClick={handleTextChange}>{text}</button>
+      </Wrapper>
     </div>
   );
 };
