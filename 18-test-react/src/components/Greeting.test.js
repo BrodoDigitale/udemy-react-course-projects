@@ -21,5 +21,8 @@ describe("greeting component", () => {
     userEvent.click(button);
     const buttonWithNewText = screen.getByText("Text changed", { exact: true });
     expect(buttonWithNewText).toBeInTheDocument();
+    //queryByText can return null without failing the test
+    const buttonWithOriginalText = screen.queryByText("Button");
+    expect(buttonWithOriginalText).toBeNull();
   });
 });
