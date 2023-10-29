@@ -1,5 +1,6 @@
 import { FC, ReactNode } from "react"
 import { Item } from "../models/todo"
+import { TodoItem } from "./TodoItem"
 
 type todosProps = {
     listItems: Item[],
@@ -8,9 +9,7 @@ type todosProps = {
 
 export const Todos: FC<todosProps> = ({listItems}) => {
     return(<ul>
-        {listItems.map(item => {
-            return <li key={item.id}>{item.title}</li>
-        })}
+        {listItems.map(item => <TodoItem item={item}/>)}
     </ul>)
 
 }
