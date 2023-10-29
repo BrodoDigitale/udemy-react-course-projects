@@ -3,8 +3,8 @@ import './App.css';
 import { Todos } from './components/Todos';
 
 const todos = [
-  {title: "learn React"},
-  {title: "learn Typescript"}
+  {id: "1", title: "learn React"},
+  {id: "2", title: "learn Typescript"}
 ]
 function App() {
   return (
