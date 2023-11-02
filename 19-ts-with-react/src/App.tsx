@@ -1,23 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { Todos } from './components/Todos';
 import { NewTodo } from './components/NewTodo';
+import { Item } from './models/todo';
 
-const todos = [
+const initialTodos = [
   {id: "1", title: "learn React"},
   {id: "2", title: "learn Typescript"}
 ]
 function App() {
-  const addTodoHandler = (text: string) => {
-    todos.push( {
-      id: todos[todos.length - 1].id + 1,
-      title: text, 
+  const [todos, setTodos] = useState<Item[]>(initialTodos);
+  const onAddTodo = (text: string) => {
+    const newTodo = {
+      id: (todos.length + 1).toString(),
+      title: text,
+    }
+    setTodos((prevTodos) => { 
+      return [ newTodo, ...prevTodos]
     })
-  }
 
+  }
   return (
     <div className="App">
-      <NewTodo onAddTodo={addTodoHandler}/>
+      <NewTodo onAddTodo={onAddTodo}/>
       <Todos listItems={todos}/>
     </div>
   );
