@@ -1,6 +1,7 @@
-import { FormEvent, useRef } from "react";
+import { FormEvent, useRef, FC } from "react";
 
-export const NewTodo = () => {
+
+export const NewTodo: FC<{onAddTodo: (newTodo: string) => void}>= ({onAddTodo}) => {
   const todoRefInput = useRef<HTMLInputElement>(null);
   const submitHandler = (evt: FormEvent) => {
     evt.preventDefault();
@@ -8,6 +9,7 @@ export const NewTodo = () => {
     if(enteredText.trim().length === 0) {
         return;
     }
+    onAddTodo(enteredText);
   };
   return (
     <form onSubmit={submitHandler}>
