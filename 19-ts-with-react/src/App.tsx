@@ -18,12 +18,16 @@ function App() {
     setTodos((prevTodos) => { 
       return [ newTodo, ...prevTodos]
     })
+  }
 
+  const onRemoveTodo = (id: string) =>  {
+    const updatedTodos = todos.filter(item => item.id !== id);
+    setTodos(updatedTodos);
   }
   return (
     <div className="App">
       <NewTodo onAddTodo={onAddTodo}/>
-      <Todos listItems={todos}/>
+      <Todos listItems={todos} removeTodo={onRemoveTodo}/>
     </div>
   );
 }
