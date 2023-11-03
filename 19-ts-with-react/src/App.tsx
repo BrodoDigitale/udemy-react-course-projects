@@ -21,8 +21,9 @@ function App() {
   }
 
   const onRemoveTodo = (id: string) =>  {
-    const updatedTodos = todos.filter(item => item.id !== id);
-    setTodos(updatedTodos);
+    setTodos(prevTodos => {
+      return prevTodos.filter((item) => item.id !== id);
+    });
   }
   return (
     <div className="App">
