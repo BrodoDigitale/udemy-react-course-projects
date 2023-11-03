@@ -1,14 +1,15 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { Item } from "../models/todo";
 import classes from "./TodoItem.module.css";
+import { TodosContext } from "../store/todos-context";
 
 type TodoItemProps = {
   item: Item;
-  removeTodo: (id: string) => void;
 };
-export const TodoItem: FC<TodoItemProps> = ({ item, removeTodo }) => {
+export const TodoItem: FC<TodoItemProps> = ({ item }) => {
+const ctx = useContext(TodosContext);
   return (
-    <li className={classes.item} key={item.id} onClick={removeTodo.bind(null, item.id)}>
+    <li className={classes.item} key={item.id} onClick={ctx.removeTodo.bind(null, item.id)}>
       {item.title}
     </li>
   );
