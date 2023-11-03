@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import './App.css';
 import { Todos } from './components/Todos';
 import { NewTodo } from './components/NewTodo';
