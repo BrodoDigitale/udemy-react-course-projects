@@ -7,14 +7,13 @@ import EventItem from '../Events/EventItem';
 
 export default function FindEventSection() {
   const searchElement = useRef();
-  const [seachTerm, setSearchTerm] = useState('')
+  const [seachTerm, setSearchTerm] = useState('');
 
   const { data, isPending, isError, error } = useQuery({
     //by constructing a query key dynamically react query can cache(and reuse) different data
     //for different keys based on the same query
     queryKey:  ['events', {search: seachTerm}],
-    queryFn: () => {fetchEvents(seachTerm)}
-  });
+    queryFn: ({signal}) => fetchEvents({signal, seachTerm})});
 
   function handleSubmit(event) {
     event.preventDefault();
