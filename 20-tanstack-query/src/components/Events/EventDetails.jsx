@@ -2,13 +2,14 @@ import { Link, Outlet, useParams } from 'react-router-dom';
 import Header from '../Header.jsx';
 import { useQuery } from '@tanstack/react-query';
 import { fetchEvent } from '../../util/http.js';
+import LoadingIndicator from '../UI/LoadingIndicator.jsx';
 
 
 export default function EventDetails() {
   const { id } = useParams();
 
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["event", { event: id }],
+    queryKey: ["events", id ],
     queryFn: ({ signal }) => fetchEvent({ id, signal }),
   });
 
@@ -29,6 +30,11 @@ export default function EventDetails() {
 
   if (data) {
     const { title, image, description, date, time, location } = data;
+    const formattedDDate = new Date(date).toLocaleDateString('en-US', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric'
+    });
     content =
       <>
         <header>
@@ -39,11 +45,11 @@ export default function EventDetails() {
           </nav>
         </header>
         <div id="event-details-content">
-          <img src={`url(${image})`} alt={title} />
+          <img src={`http://localhost:3000/${image}`} alt={title} />
           <div id="event-details-info">
             <div>
               <p id="event-details-location">{location}</p>
-              <time dateTime={`Todo-DateT$Todo-Time`}>{date} @ {time}</time>
+              <time dateTime={`Todo-DateT$Todo-Time`}>{formattedDDate} @ {time}</time>
             </div>
             <p id="event-details-description">{description}</p>
           </div>
