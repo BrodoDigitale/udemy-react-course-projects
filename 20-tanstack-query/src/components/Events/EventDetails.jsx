@@ -1,33 +1,36 @@
-import { Link, Outlet, useParams } from 'react-router-dom';
-import Header from '../Header.jsx';
-import { useQuery, useMutation } from '@tanstack/react-query';
-import { deleteEvent, fetchEvent } from '../../util/http.js';
-import LoadingIndicator from '../UI/LoadingIndicator.jsx';
-import ErrorBlock from '../UI/ErrorBlock.jsx';
-
+import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
+import Header from "../Header.jsx";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { deleteEvent, fetchEvent, queryClient } from "../../util/http.js";
+import LoadingIndicator from "../UI/LoadingIndicator.jsx";
+import ErrorBlock from "../UI/ErrorBlock.jsx";
 
 export default function EventDetails() {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["events", id ],
+    queryKey: ["events", id],
     queryFn: ({ signal }) => fetchEvent({ id, signal }),
   });
 
-    const { mutate, isPending } = useMutation({
-    mutationFn: deleteEvent({id}),
+  const { mutate, isPending } = useMutation({
+    mutationFn: deleteEvent,
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: ['events']}),
-      navigate("/events")
-    }
+      queryClient.invalidateQueries({
+        queryKey: ["events"],
+        refetchType: "none",
+      }),
+        navigate("/events");
+    },
   });
 
   const handleDelete = () => {
-    mutate({ id });
-  }
+    mutate({ id: id });
+  };
 
   let content;
-  
+
   if (isLoading) {
     content = <LoadingIndicator />;
   }
@@ -43,12 +46,12 @@ export default function EventDetails() {
 
   if (data) {
     const { title, image, description, date, time, location } = data;
-    const formattedDDate = new Date(date).toLocaleDateString('en-US', {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric'
+    const formattedDDate = new Date(date).toLocaleDateString("en-US", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
     });
-    content =
+    content = (
       <>
         <header>
           <h1>{title}</h1>
@@ -62,12 +65,15 @@ export default function EventDetails() {
           <div id="event-details-info">
             <div>
               <p id="event-details-location">{location}</p>
-              <time dateTime={`Todo-DateT$Todo-Time`}>{formattedDDate} @ {time}</time>
+              <time dateTime={`Todo-DateT$Todo-Time`}>
+                {formattedDDate} @ {time}
+              </time>
             </div>
             <p id="event-details-description">{description}</p>
           </div>
         </div>
       </>
+    );
   }
 
   return (
@@ -78,9 +84,7 @@ export default function EventDetails() {
           View all Events
         </Link>
       </Header>
-      <article id="event-details">
-        {content}
-      </article>
+      <article id="event-details">{content}</article>
     </>
   );
 }
