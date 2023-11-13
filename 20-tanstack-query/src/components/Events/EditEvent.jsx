@@ -1,11 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import { fetchEvent } from "../../util/http.js";
+import { fetchEvent, updateEvent, queryClient } from "../../util/http.js";
 import LoadingIndicator from "../UI/LoadingIndicator.jsx";
 import ErrorBlock from "../UI/ErrorBlock.jsx";
-import { updateEvent } from "../../util/http.js";
-
 import Modal from "../UI/Modal.jsx";
 import EventForm from "./EventForm.jsx";
 import { useMutation } from "@tanstack/react-query";
@@ -21,6 +19,13 @@ export default function EditEvent() {
 
     const { mutate } = useMutation({
     mutationFn: updateEvent,
+    //data is passed automatically, it is the data that qas send to BE
+    onMutate: async (data) => {
+      const newEvent = data.event;
+      //will not cancell mutation, only queries with useQuery
+      await queryClient.cancelQueries({queryKey: ['events', id]})
+      queryClient.setQueryData(['events', id], newEvent);
+    }
   });
 
   function handleSubmit(formData) {
