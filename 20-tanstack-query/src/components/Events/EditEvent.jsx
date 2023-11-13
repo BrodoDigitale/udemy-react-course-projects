@@ -19,12 +19,28 @@ export default function EditEvent() {
 
     const { mutate } = useMutation({
     mutationFn: updateEvent,
-    //data is passed automatically, it is the data that qas send to BE
     onMutate: async (data) => {
       const newEvent = data.event;
-      //will not cancell mutation, only queries with useQuery
+      
+      //stores original data using the query key
+      const previousEventData = queryClient.getQueryData(['events', id]);
+
       await queryClient.cancelQueries({queryKey: ['events', id]})
       queryClient.setQueryData(['events', id], newEvent);
+
+      //return value to make availiable in the context in case of error
+      return {
+        previousEvent: previousEventData
+      }
+    },
+    //on error roll back will be done
+    onError: (error, data, context) => {
+      queryClient.setQueryData(['events', id], content.previousEvent);
+    },
+    //will be called when mutation finishes no matter with which result
+    //is important to align be with fe
+    onSettled: () => {
+      queryClient.invalidateQueries(['events', id]);
     }
   });
 
