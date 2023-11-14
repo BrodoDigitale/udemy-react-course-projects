@@ -14,6 +14,7 @@ export default function EditEvent() {
   const { data, isError, error } = useQuery({
     queryKey: ["events", id],
     queryFn: ({ signal }) => fetchEvent({ id, signal }),
+    staleTime: 10000,
   });
 
   function handleSubmit(formData) {
