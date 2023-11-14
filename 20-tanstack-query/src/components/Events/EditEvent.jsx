@@ -1,13 +1,15 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { Link, redirect, useNavigate, useSubmit } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { fetchEvent, updateEvent, queryClient } from "../../util/http.js";
 import ErrorBlock from "../UI/ErrorBlock.jsx";
 import Modal from "../UI/Modal.jsx";
 import EventForm from "./EventForm.jsx";
+import { redirect, useSubmit } from "react-router-dom";
 
 export default function EditEvent() {
   const navigate = useNavigate();
+  const submit = useSubmit();
   const { id } = useParams();
 
   const { data, isError, error } = useQuery({
@@ -15,36 +17,10 @@ export default function EditEvent() {
     queryFn: ({ signal }) => fetchEvent({ id, signal }),
   });
 
-  const { mutate } = useMutation({
-    mutationFn: updateEvent,
-    onMutate: async (data) => {
-      const newEvent = data.event;
-
-      //stores original data using the query key
-      const previousEventData = queryClient.getQueryData(["events", id]);
-
-      await queryClient.cancelQueries({ queryKey: ["events", id] });
-      queryClient.setQueryData(["events", id], newEvent);
-
-      //return value to make availiable in the context in case of error
-      return {
-        previousEvent: previousEventData,
-      };
-    },
-    //on error roll back will be done
-    onError: (error, data, context) => {
-      queryClient.setQueryData(["events", id], content.previousEvent);
-    },
-    //will be called when mutation finishes no matter with which result
-    //is important to align be with fe
-    onSettled: () => {
-      queryClient.invalidateQueries(["events", id]);
-    },
-  });
-
   function handleSubmit(formData) {
-    mutate({ id, event: formData });
-    navigate("../");
+    //is not actually submitting data but triggering 
+    //router action function
+    submit(formData, {method: 'PUT'})
   }
 
   function handleClose() {
@@ -89,3 +65,11 @@ export const loader = ({params}) => {
     queryFn: ({ signal }) => fetchEvent({ id: params.id, signal }),
   });
 };
+
+export async function action ({request, params}) {
+  const formData = await request.formData();
+  const updatedEvent = Object.entries(formData);
+  await updateEvent({id: params.id, event: updatedEvent});
+  await queryClient.invalidateQueries(['events']);
+  return redirect("../");
+}
