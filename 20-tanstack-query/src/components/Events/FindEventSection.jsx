@@ -13,7 +13,7 @@ export default function FindEventSection() {
     //by constructing a query key dynamically react query can cache(and reuse) different data
     //for different keys based on the same query
     queryKey: ["events", { search: searchTerm }],
-    queryFn: ({ signal }) => fetchEvents({ signal, searchTerm }),
+    queryFn: ({ signal, queryKey }) => fetchEvents({ signal, ...queryKey[1] }),
     enabled: searchTerm !== undefined,
   });
 
