@@ -5,7 +5,6 @@ import { fetchEvent, updateEvent, queryClient } from "../../util/http.js";
 import ErrorBlock from "../UI/ErrorBlock.jsx";
 import Modal from "../UI/Modal.jsx";
 import EventForm from "./EventForm.jsx";
-import { redirect, useSubmit } from "react-router-dom";
 
 export default function EditEvent() {
   const navigate = useNavigate();
