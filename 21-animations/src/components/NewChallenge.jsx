@@ -1,9 +1,9 @@
-import { useContext, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import { useContext, useRef, useState } from "react";
+import { motion } from "framer-motion";
 
-import { ChallengesContext } from '../store/challenges-context.jsx';
-import Modal from './Modal.jsx';
-import images from '../assets/images.js';
+import { ChallengesContext } from "../store/challenges-context.jsx";
+import Modal from "./Modal.jsx";
+import images from "../assets/images.js";
 
 export default function NewChallenge({ onDone }) {
   const title = useRef();
@@ -57,23 +57,23 @@ export default function NewChallenge({ onDone }) {
           <input ref={deadline} type="date" name="deadline" id="deadline" />
         </p>
 
-        <ul id="new-challenge-images">
+c
           {images.map((image) => (
             <motion.li
               variants={{
-                hidden: { opacity: 0, scale: 0.5},
-                visible: { opacity: 1, scale: 1}
+                hidden: { opacity: 0, scale: 0.5 },
+                visible: { opacity: 1, scale: 1 },
               }}
-              exit={{ opacity: 1, scale: 1}} //exit is needed to avoid delay before modal desappears
-              transition={{type: 'spring'}}
+              exit={{ opacity: 1, scale: 1 }} //exit is needed to avoid delay before modal desappears
+              transition={{ type: "spring" }}
               key={image.alt}
               onClick={() => handleSelectImage(image)}
-              className={selectedImage === image ? 'selected' : undefined}
+              className={selectedImage === image ? "selected" : undefined}
             >
               <img {...image} />
             </motion.li>
           ))}
-        </ul>
+        </motion.ul>
 
         <p className="new-challenge-actions">
           <button type="button" onClick={onDone}>
