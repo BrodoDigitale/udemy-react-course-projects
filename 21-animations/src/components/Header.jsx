@@ -22,14 +22,15 @@ export default function Header() {
 
       <header id="main-header">
         <h1>Your Challenges</h1>
-        <motion.button 
-        onClick={handleStartAddNewChallenge} 
-        className="button"
-        whileHover={{
-          scale: 1.1
-        }}
-        transition={{type: 'spring', stiffness: 500}}
-        while
+        <motion.button
+          onClick={handleStartAddNewChallenge}
+          className="button"
+          whileHover={{
+            scale: 1.1,
+          }}
+          transition={{ 
+            type: "spring", 
+            stiffness: 500 }}
         >
           Add Challenge
         </motion.button>
