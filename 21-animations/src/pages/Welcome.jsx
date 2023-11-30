@@ -6,7 +6,10 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 
 export default function WelcomePage() {
   const { scrollY } = useScroll();
+
   const opacityCity = useTransform(scrollY, [0, 200, 300, 500], [1, 0.5, 0.5, 0]);
+  const yCity = useTransform(scrollY, [0, 200], [0, -100]);
+
   return (
     <>
       <header id="welcome-header">
@@ -17,7 +20,7 @@ export default function WelcomePage() {
           </Link>
         </motion.div>
         <motion.img
-           style={{opacity: opacityCity}}
+           style={{opacity: opacityCity, y: yCity}}
           src={cityImg}
           alt="A city skyline touched by sunlight"
           id="city-image"
